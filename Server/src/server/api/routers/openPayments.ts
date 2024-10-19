@@ -36,7 +36,7 @@ export const openPaymentsRouter = createTRPCRouter({
       return { ...response, ...{ data: walletAddressDetails } };
     }),
 
-  createIncomingPayment: publicProcedure
+  createIncomingPayment: publicProcedure // the sender details
     .input(
       z.object({
         walletAddress: z.string(),
@@ -62,7 +62,7 @@ export const openPaymentsRouter = createTRPCRouter({
 
       console.log("** 1 inc");
 
-      // create incoming payment
+      // create incoming payment for the receiver
       const incomingPayment = await createIncomingPayment(
         client,
         input.value,
@@ -86,7 +86,7 @@ export const openPaymentsRouter = createTRPCRouter({
         data: {},
       };
 
-      // Initialize Open Payments client
+      // Initialize Open Payments client for receiver
       const client = await getAuthenticatedClient();
 
       // get wallet details
@@ -107,7 +107,7 @@ export const openPaymentsRouter = createTRPCRouter({
       return { ...response, ...{ data: qoute } };
     }),
 
-  getOutgoingPaymentAuthorization: publicProcedure
+  getOutgoingPaymentAuthorization: publicProcedure 
     .input(opAuthSchema)
     .query(async ({ input }) => {
       const response: Response = {
